@@ -1,0 +1,223 @@
+{% extends 'header.html' %}
+
+{% block title %} Home | CodingBlog {% endblock %}
+{% block blogactive %} active {% endblock %}
+{%load static%}
+
+{%block body%}
+	<!-- hero area -->
+	<div class="hero-area hero-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9 offset-lg-2 text-center">
+					<div class="hero-text">
+						<div class="hero-text-tablecell">
+							<p class="subtitle">Welcome To CodingBlog</p>
+							<h1>Your Gateway to the Coding Universe</h1>
+							<div class="hero-btns">
+								<a href="/blog/?page=1" class="boxed-btn">Explore</a>
+								<a href="/contact" class="bordered-btn">Contact Us</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end hero area -->
+	<!-- logo carousel -->
+	<div class="logo-carousel-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="logo-carousel-inner">
+						{%for cat in category%}
+						<div class="single-logo-item">
+							<a href="/blog/cat/{{cat.id}}"> <img src="/{{cat.img}}" alt="{{cat.img}}"> </a>
+						</div>
+						{%endfor%}
+					
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- features list section -->
+	<div class="list-section pt-80 pb-80">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+					<div class="list-box d-flex align-items-center">
+						<div class="list-icon">
+							<i class="fas fa-shipping-fast"></i>
+						</div>
+						<div class="content">
+							<h3>Free Shipping</h3>
+							<p>When order over $75</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+					<div class="list-box d-flex align-items-center">
+						<div class="list-icon">
+							<i class="fas fa-phone-volume"></i>
+						</div>
+						<div class="content">
+							<h3>24/7 Support</h3>
+							<p>Get support all day</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="list-box d-flex justify-content-start align-items-center">
+						<div class="list-icon">
+							<i class="fas fa-sync"></i>
+						</div>
+						<div class="content">
+							<h3>Refund</h3>
+							<p>Get refund within 3 days!</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- end features list section -->
+
+	<!-- product section -->
+	{%for c in category%}
+	<div class="product-section mt-150 mb-50">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="section-title">	
+						<h3><span class="orange-text">{{c.name}}</span></h3>
+						
+					</div>
+				</div>
+			</div>
+
+			<!-- logo carousel -->
+
+			<div class="logo-carousel-section">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="logo-carousel-inner">
+								{%for post in catPosts%}
+				
+									{%if post.cat.name == c.name %}
+								<div class="single-logo-item">
+									
+										<div class="single-latest-news">
+											<a href="/blog/{{post.slug}}">
+												<img src="/{{post.img}}" height="150px" width="350px" alt="">
+											</a>
+											<div class="news-text-box">
+												<h3><a href="/blog/{{post.slug}}">{{post.title|slice:"0:20"}}...</a></h3>
+												<p class="blog-meta">
+													<span class="author"><i class="fas fa-user"></i> {{post.author}}</span>
+													<span class="date"><i class="fas fa-calendar"></i> {{post.timeStamp}}</span>
+													<span class="date"> <i class="fa fa-eye" aria-hidden="true"></i> {{post.views}} </span>
+												</p>
+												
+												<a href="/blog/{{post.slug}}" class="cart-btn mt-3">Read more <i class="fas fa-angle-right"></i></a>
+											</div>
+										</div>
+										
+									
+								</div>
+									{%endif%}
+									
+								{%endfor%}
+								
+								
+							</div>
+						</div>
+					</div>
+					<center><a href="/blog/cat/{{c.id}}" class="cart-btn  "><i class="fas fa-angle-right"></i>View All</a></center>
+				</div>
+			</div>
+			<!--
+			<div class="row">
+				{%for post in catPosts%}
+				
+					{%if post.cat.name == c.name %}
+					
+					<div class="col-lg-4 col-md-6 text-center">
+						<div class="single-product-item">
+							<div class="product-image">
+								<a href="single-product.html"><img src="/{{post.img}}" height="150px" alt=""></a>
+							</div>
+							<h3>{{post.title}}</h3>
+							<p class="product-price"><span>{{post.name}}</span> </p>
+							<a href="/blog/{{post.slug}}" class="cart-btn"><i class="fas fa-eye"></i> Read More</a>
+						</div>
+					</div>
+					{%endif%}
+				{%endfor%}
+				
+			</div>
+			---->
+		</div>
+	</div>
+	
+	{%endfor%}
+	<!-- end product section -->
+
+
+
+	<!-- latest news -->
+	<div class="latest-news pt-150 pb-150">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="section-title">	
+						<h3><span class="orange-text">Our</span> News</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				{% for i in allposts%}
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a href="/blog/{{i.slug}}"><div class="latest-news-bg news-bg-1">
+							<img src="/{{i.img}}" height="200px" width="350px" alt="">
+						</div></a>
+						<div class="news-text-box">
+							<h3><a href="/blog/{{i.slug}}">{{i.title}}</a></h3>
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> {{i.author}}</span>
+								<span class="date"><i class="fas fa-calendar"></i> {{i.timeStamp}}</span>
+								<span class="date"> <i class="fa fa-eye" aria-hidden="true"></i> {{i.views}} </span>
+							</p>
+							<div class="preview">{{i.content|slice:"0:300"| safe}}...</div>
+							<a href="/blog/{{i.slug}}" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+						</div>
+					</div>
+				</div>
+				{%endfor%}
+				
+			</div>
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<a href="/blog" class="boxed-btn">More News</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end latest news -->
+
+	<!-- logo carousel -->
+
+	<!-- end logo carousel -->
+
+	{%endblock%}

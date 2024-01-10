@@ -1,0 +1,417 @@
+{% extends "header.html" %}
+{% block title %} {{post.title}} | CodingBlog {% endblock %}
+
+
+{% block body %}
+{% load humanize %}
+{%load extras%}
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="breadcrumb-text">
+					<p>Read the Details</p>
+					<h1>{{post.title}}</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end breadcrumb section -->
+
+<style>
+	.be-comment-block {
+		margin-bottom: 50px !important;
+		border: 1px solid #edeff2;
+		border-radius: 2px;
+		padding: 10px 30px;
+		border: 1px solid #ffffff;
+	}
+
+	.comments-title {
+		font-size: 16px;
+		color: #262626;
+		margin-bottom: 15px;
+		font-family: 'Conv_helveticaneuecyr-bold';
+	}
+
+	.be-img-comment {
+		width: 60px;
+		height: 60px;
+		float: left;
+		margin-bottom: 15px;
+	}
+
+	.be-ava-comment {
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+	}
+
+	.be-ava-reply {
+		width: 39px;
+		height: 39px;
+		border-radius: 50%;
+	}
+
+	.be-comment-content {
+		margin-left: 80px;
+	}
+
+
+	.be-comment-content span {
+		display: inline-block;
+		width: 49%;
+		margin-bottom: 15px;
+	}
+
+	.be-comment-name {
+		font-size: 13px;
+		font-family: 'Conv_helveticaneuecyr-bold';
+	}
+
+	.be-comment-content a {
+		color: #383b43;
+	}
+
+	.be-comment-content span {
+		display: inline-block;
+		width: 49%;
+		margin-bottom: 15px;
+	}
+
+	.be-comment-time {
+		text-align: right;
+	}
+
+	.be-comment-time {
+		font-size: 11px;
+		color: #b4b7c1;
+	}
+
+	.be-comment-text {
+		font-size: 13px;
+		line-height: 18px;
+		color: #7a8192;
+		display: block;
+		background: #f6f6f7;
+		border: 1px solid #edeff2;
+		padding: 15px 20px 20px 20px;
+	}
+
+	.form-group.fl_icon .icon {
+		position: absolute;
+		top: 1px;
+		left: 16px;
+		width: 48px;
+		height: 48px;
+		background: #f6f6f7;
+		color: #b5b8c2;
+		text-align: center;
+		line-height: 50px;
+		-webkit-border-top-left-radius: 2px;
+		-webkit-border-bottom-left-radius: 2px;
+		-moz-border-radius-topleft: 2px;
+		-moz-border-radius-bottomleft: 2px;
+		border-top-left-radius: 2px;
+		border-bottom-left-radius: 2px;
+	}
+
+	.form-group .form-input {
+		font-size: 13px;
+		line-height: 50px;
+		font-weight: 400;
+		color: #b4b7c1;
+		width: 100%;
+		height: 50px;
+		padding-left: 20px;
+		padding-right: 20px;
+		border: 1px solid #edeff2;
+		border-radius: 3px;
+	}
+
+	.form-group.fl_icon .form-input {
+		padding-left: 70px;
+	}
+
+	.form-group textarea.form-input {
+		height: 150px;
+	}
+
+
+	.be-reply {
+		border-left: 1px solid #a0a0a0;
+
+		margin-top: -1%;
+		padding: 2px;
+	}
+
+	.form-group .form-input {
+		width: 400px;
+	}
+
+
+	@media screen and (max-width: 700px) {
+		.form-input {
+			background-color: lightgreen;
+			width: 300px;
+		}
+	}
+</style>
+
+<!-- single article section -->
+<div class="mt-150 mb-150">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="single-article-section">
+					<div class="single-article-text">
+						<div class="single-artcile-bg">
+							<img src="/{{post.img}}"  alt="">
+						</div>
+						<p class="blog-meta">
+							<span class="author"><i class="fas fa-user"></i> {{post.author}}</span>
+							<span class="date"><i class="fas fa-calendar"></i> {{post.timeStamp}}</span>
+							<span class="date"><i class="fas fa-eye"></i> {{post.views}}</span>
+						</p>
+						<h1>{{post.title}} </h1>
+						<p>{{post.content|safe}}</p>
+					</div>
+					<p style="background-color:#111; color:#fff; padding:2px 10px; width: 300px;font-size: 25px; border-radius:25px;">Related</p>
+					<div class="row">
+					
+						{%for p in cat_wise_post%}
+						<div class="col-lg-4 col-md-6 text-center">
+							<div class="single-product-item">
+								<div class="product-image">
+									<a href="/blog/{{p.slug}}"><img src="/{{p.img}}" alt=""></a>
+								</div>
+								<a href="/blog/{{p.slug}}">{{p.title}}...</a>
+								
+							</div>
+						</div>
+						{%endfor%}
+						
+					</div>
+
+					<div class="container">
+
+
+
+						<div class="be-comment-block">
+							<h1 class="comments-title">Comments ({{comments.count}})</h1>
+							{% for i in comments %}
+							<div class="be-comment">
+								<div class="be-img-comment">
+									<a href="blog-detail-2.html">
+										<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""
+											class="be-ava-comment">
+									</a>
+								</div>
+								<div class="be-comment-content">
+
+									<span class="be-comment-name">
+										<a href="blog-detail-2.html">{{i.user}}</a>
+									</span>
+
+									<span class="be-comment-time">
+										<i class="fa fa-clock"></i>
+										{{i.timestamp | naturaltime}}
+									</span>
+
+									<p class="be-comment-text">
+										{{i.comment}}
+
+
+
+									<p class="d-inline-flex gap-1">
+										<button class="btn btn-secondary" type="button" data-toggle="collapse"
+											data-target="#collapseExample{{i.sno}}" aria-expanded="false"
+											aria-controls="collapseExample">
+											reply
+										</button>
+
+										{%if user.is_authenticated%}
+									<div class="collapse" id="collapseExample{{i.sno}}">
+										<div class="card card-body">
+											<form class="form-block" action="/blog/postComment/" method="POST"> {%csrf_token %}
+												<div class="col-xs-12 col-sm-6 fl_icon">
+
+													<div class="col-xs-12  d-flex justify-content-between">
+														<div>
+															<img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+																alt="" class="be-ava-comment">
+														</div>
+
+														<div class="form-group">
+
+															<input class="form-input p-3  " style="width: 400px;"
+																name="comment" placeholder="Your Comment Here....">
+															<input type="hidden" name="postSno" value="{{post.sno}}">
+															<input type="hidden" name="parentSno" value="{{i.sno}}">
+
+															<button class="btn btn-outline-secondary pull-right"
+																type="submit">Reply</button>
+														</div>
+													</div>
+												</div>
+											</form>
+
+										</div>
+									</div>
+									</p>
+									{%else%}
+
+									<div class="collapse" id="collapseExample{{i.sno}}">
+										<div class="alert alert-warning alert-dismissible fade show" role="alert">
+											<strong>Warning!</strong> Please Login to replies comment
+											<button type="button" class="btn-close" data-bs-dismiss="alert"
+												aria-label="Close"></button>
+										</div>
+									</div>
+									{%endif%}
+
+
+									<div class="replies">
+										{% for reply in replyDict|get_val:i.sno %}
+										<!---Displaying Reply -->
+
+										<div class="be-reply">
+											<div class="be-img-comment">
+												<a href="blog-detail-2.html">
+													<img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+														height="200px" width="200px" alt="" class="be-ava-reply">
+												</a>
+											</div>
+											<div class="be-comment-content">
+
+												<span class="be-comment-name">
+													<a href="blog-detail-2.html">{{reply.user}}</a>
+												</span>
+
+												<span class="be-comment-time">
+													<i class="fa fa-clock"></i>
+													{{reply.timestamp | naturaltime}}
+												</span>
+
+												<p class="be-comment-text">
+													{{reply.comment}}
+
+												</p>
+											</div>
+										</div>
+
+										{% endfor %}
+									</div>
+
+
+
+
+								</div>
+							</div>
+							{%endfor%}
+
+							<div class="comment-template mt-2">
+								<h4>Leave a comment</h4>
+								<p>If you have a comment dont feel hesitate to send us your opinion.</p>
+								{% for message in messages %}
+								<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+									<strong>Message!</strong> {{ message }}
+									<button type="button" class="btn-close" data-bs-dismiss="alert"
+										aria-label="Close">X</button>
+								</div>
+								{% endfor %}
+								{% if user.is_authenticated %}
+								<form class="form-block" action="/blog/postComment/" method="POST"> {% csrf_token %}
+									<div class="col-xs-12 col-sm-6 fl_icon">
+
+										<div class="col-xs-12  d-flex justify-content-around">
+											<div>
+												<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""
+													class="be-ava-comment">
+											</div>
+
+
+											<div class="form-group">
+
+												<input class="form-input p-3  " name="comment"
+													placeholder="Your Comment Here...." autocomplete="off">
+												<input type="hidden" name="postSno" value="{{post.sno}}">
+												<input type="hidden" name="parentSno" value=""> <br>
+												<button class="btn btn-outline-secondary pull-right mt-2"
+													type="submit">Comment</button>
+											</div>
+										</div>
+
+
+									</div>
+								</form>
+							</div>
+
+
+							{% else %}
+							<div class="be-comment-content">
+
+
+								<p class="be-comment-text text-warning">
+									Please Login to your Account
+								</p>
+							</div>
+						</div>
+							{% endif %}
+
+
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+			
+			<div class="col-lg-4">
+				<div class="sidebar-section">
+					<div class="recent-posts">
+						<h4>Recent Posts</h4>
+						<ul>
+							{%for i in allposts|slice:"0:6"%}
+							<li>
+								<img src="/{{i.img}}" height="50px" width="60px" />
+								<a href="/blog/{{i.slug}}">{{i.title}}</a>
+							</li>
+							{%endfor%}
+						</ul>
+					</div>
+					<div class="archive-posts">
+						<h4>Category</h4>
+						<ul>
+							{%for i in category%}
+							<li><a href="/blog/cat/{{i.id}}">{{i.name}} </a></li>
+							{%endfor%}
+						</ul>
+					</div>
+					<div class="tag-section">
+						<h4>Tags</h4>
+						<ul>
+
+							<li><a href="/blog/cat/{{post.cat.id}}">{{post.cat.name}}</a></li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end single article section -->
+	<style>
+		.single-latest-news{
+			height:500px;
+		}
+	</style>
+
+	<!-- logo carousel -->
+<!-- logo carousel -->
+
+	<!-- end logo carousel -->
+
+	{%endblock%}

@@ -1,0 +1,342 @@
+{% extends 'basic.html' %}
+
+{% block title %} {{post.title}} | CodingBlog {% endblock %}
+
+
+{% block body %}
+{% load humanize %}
+{%load extras%}
+
+<style>
+  .be-comment-block {
+    margin-bottom: 50px !important;
+    border: 1px solid #edeff2;
+    border-radius: 2px;
+    padding: 50px 70px;
+    border:1px solid #ffffff;
+}
+
+.comments-title {
+    font-size: 16px;
+    color: #262626;
+    margin-bottom: 15px;
+    font-family: 'Conv_helveticaneuecyr-bold';
+}
+
+.be-img-comment {
+    width: 60px;
+    height: 60px;
+    float: left;
+    margin-bottom: 15px;
+}
+
+.be-ava-comment {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.be-ava-reply{
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+}
+
+.be-comment-content {
+    margin-left: 80px;
+}
+
+
+.be-comment-content span {
+    display: inline-block;
+    width: 49%;
+    margin-bottom: 15px;
+}
+
+.be-comment-name {
+    font-size: 13px;
+    font-family: 'Conv_helveticaneuecyr-bold';
+}
+
+.be-comment-content a {
+    color: #383b43;
+}
+
+.be-comment-content span {
+    display: inline-block;
+    width: 49%;
+    margin-bottom: 15px;
+}
+
+.be-comment-time {
+    text-align: right;
+}
+
+.be-comment-time {
+    font-size: 11px;
+    color: #b4b7c1;
+}
+
+.be-comment-text {
+    font-size: 13px;
+    line-height: 18px;
+    color: #7a8192;
+    display: block;
+    background: #f6f6f7;
+    border: 1px solid #edeff2;
+    padding: 15px 20px 20px 20px;
+}
+
+.form-group.fl_icon .icon {
+    position: absolute;
+    top: 1px;
+    left: 16px;
+    width: 48px;
+    height: 48px;
+    background: #f6f6f7;
+    color: #b5b8c2;
+    text-align: center;
+    line-height: 50px;
+    -webkit-border-top-left-radius: 2px;
+    -webkit-border-bottom-left-radius: 2px;
+    -moz-border-radius-topleft: 2px;
+    -moz-border-radius-bottomleft: 2px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.form-group .form-input {
+    font-size: 13px;
+    line-height: 50px;
+    font-weight: 400;
+    color: #b4b7c1;
+    width: 100%;
+    height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 1px solid #edeff2;
+    border-radius: 3px;
+}
+
+.form-group.fl_icon .form-input {
+    padding-left: 70px;
+}
+
+.form-group textarea.form-input {
+    height: 150px;
+}
+
+
+.be-reply{
+  border-left: 1px solid #a0a0a0;
+ 
+  margin-top: -1%;
+  padding: 2px;
+}
+
+.form-group .form-input{
+  width: 400px;
+}
+
+
+@media screen and (max-width: 700px) {
+  .form-input {
+    background-color: lightgreen;
+    width: 300px;
+  }
+}
+
+
+</style>
+
+
+
+
+
+
+<div class="container my-3">
+  <div class="blog-post">
+    <h2 class="blog-post-title">{{post.title}} </h2>
+    <p class="blog-post-meta">{{post.timeStamp}} by <a href="#">{{post.author}}</a>  <span class="badge bg-secondary"> <i class="fa fa-eye" aria-hidden="true"></i> {{post.views}} </span></p>
+    <br>
+    <img src="/{{post.img}}" height="500px" width="auto" alt="">
+
+    <p>{{post.content|safe}}</p>
+    <hr>
+  </div>
+
+ <!----
+  <form action="/blog/postComment/" method="POST" enctype="application/x-www-form-urlencoded">
+    {% csrf_token %}
+    <input class="form-control" type="text" placeholder="Comment"  name="comment" aria-label="default input example">
+    <input type="hidden" name="postSno" value="{{post.sno}}" >
+    <input type="submit" value="Submit">
+  </form>
+-->
+  
+ 
+ 
+
+
+</div>
+
+
+<div class="container">
+
+
+
+  {% if user.is_authenticated %}
+  <form class="form-block" action="/blog/postComment/" method="POST"> {% csrf_token %}
+    <div class="col-xs-12 col-sm-6 fl_icon">
+      
+      <div class="col-xs-12  d-flex justify-content-around">			
+           <div>
+            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+           </div>
+
+       
+        <div class="form-group">
+          
+          <input class="form-input p-3  "   name="comment" placeholder="Your Comment Here....">
+          <input type="hidden" name="postSno" value="{{post.sno}}" > 
+          <input type="hidden" name="parentSno" value="" > <br>
+          <button class="btn btn-outline-secondary pull-right mt-2" type="submit">Comment</button>
+        </div>
+      </div>
+      
+      
+    </div>
+  </form>
+</div>
+</div>
+
+
+       {% else %}
+        <div class="be-comment-content">
+
+  
+        <p class="be-comment-text text-warning">
+         Please Login to your Account
+        </p>
+      </div>
+        {% endif %}
+
+
+
+  <div class="be-comment-block">
+    <h1 class="comments-title">Comments ({{comments.count}})</h1>
+    {% for i in comments %}
+    <div class="be-comment">
+      <div class="be-img-comment">	
+        <a href="blog-detail-2.html">
+          <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+        </a>
+      </div>
+      <div class="be-comment-content">
+        
+          <span class="be-comment-name">
+            <a href="blog-detail-2.html">{{i.user}}</a>
+            </span>
+           
+          <span class="be-comment-time">
+            <i class="fa fa-clock"></i>
+            {{i.timestamp | naturaltime}}
+          </span>
+  
+        <p class="be-comment-text">
+         {{i.comment}}
+
+       
+         
+         <p class="d-inline-flex gap-1">
+          <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{i.sno}}" aria-expanded="false" aria-controls="collapseExample">
+            reply
+          </button>
+       
+          {%if user.is_authenticated%}
+        <div class="collapse" id="collapseExample{{i.sno}}">
+          <div class="card card-body">
+            <form class="form-block" action="/blog/postComment/" method="POST"> {% csrf_token %}
+              <div class="col-xs-12 col-sm-6 fl_icon">
+                
+                <div class="col-xs-12  d-flex justify-content-between">			
+                     <div>
+                      <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+                     </div>
+
+                  <div class="form-group">
+                    
+                    <input class="form-input p-3  " style="width: 400px;"  name="comment" placeholder="Your Comment Here....">
+                    <input type="hidden" name="postSno" value="{{post.sno}}" > 
+                    <input type="hidden" name="parentSno" value="{{i.sno}}" > 
+                    
+                    <button class="btn btn-outline-secondary pull-right" type="submit">Reply</button>
+                  </div>
+                </div> 
+              </div>
+            </form>
+
+          </div>
+        </div>
+        </p>
+        {%else%}
+        
+        <div class="collapse" id="collapseExample{{i.sno}}">
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Warning!</strong> Please Login to replies comment
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+        {%endif%}
+        
+
+        <div class="replies">
+          {% for reply in replyDict|get_val:i.sno %}
+          <!---Displaying Reply -->
+
+          <div class="be-reply">
+            <div class="be-img-comment">	
+              <a href="blog-detail-2.html">
+                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" height="200px" width="200px" alt="" class="be-ava-reply">
+              </a>
+            </div>
+            <div class="be-comment-content">
+              
+                <span class="be-comment-name">
+                  <a href="blog-detail-2.html">{{reply.user}}</a>
+                  </span>
+                 
+                <span class="be-comment-time">
+                  <i class="fa fa-clock"></i>
+                  {{reply.timestamp | naturaltime}}
+                </span>
+        
+              <p class="be-comment-text">
+               {{reply.comment}}
+      
+              </p>
+            </div>
+          </div>
+
+          {% endfor %}
+          </div>
+
+
+       
+        
+      </div>
+    </div>
+    {%endfor%}
+
+
+          
+           
+       
+<script>
+  const popover = new bootstrap.Popover('.example-popover', {
+  container: 'body'
+})
+</script>
+
+
+
+{% endblock %}

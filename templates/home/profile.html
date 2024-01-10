@@ -1,0 +1,15 @@
+{% extends 'basic.html' %}
+
+{% block title %} HOME | CodingBlog {% endblock %}
+{% block homeactive %} active {% endblock %}
+
+{% block body %}
+
+<h1>Hello , {{user.username}}!</h1>
+<h1>FName: , {{user.fname}}!</h1>
+<h1>LName , {{user.lname}}!</h1>
+<h1>Email , {{user.email}}!</h1>
+
+
+
+{% endblock %}
