@@ -82,7 +82,7 @@
 								  <li >
 									<a class="nav-link {% block blogactive %} {% endblock %}" href="/blog/?page=1">Blog</a>
 								  </li>
-								  <li><a href="/blog">Category</a>
+								  <li><a href="/blog/?page=1">Category</a>
 									<ul class="sub-menu">
 										{%for cat in category%}
 										<li><a href="/blog/cat/{{cat.id}}">{{cat.name}}</a></li> <hr>
@@ -211,11 +211,11 @@
 					<div class="footer-box pages">
 						<h2 class="widget-title">Pages</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="services.html">Shop</a></li>
-							<li><a href="news.html">News</a></li>
-							<li><a href="contact.html">Contact</a></li>
+							<li><a href="/">Home</a></li>
+							<li><a href="/about">About</a></li>
+							<li><a href="/blog/?page=1">Blog</a></li>
+						
+							<li><a href="/contact">Contact</a></li>
 						</ul>
 					</div>
 				</div>

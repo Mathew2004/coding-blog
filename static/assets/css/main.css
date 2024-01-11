@@ -1679,7 +1679,7 @@ p.excerpt {
 
 .single-latest-news {
   margin-bottom: 30px;
-  height: 450px;
+  height: max-content;
 }
 
 .single-artcile-bg img {
@@ -2422,14 +2422,15 @@ ul.social-link-team li a {
 }
 
 .product-image {
-  padding: 30px;
+  padding: 0px;
   padding-bottom: 0;
 }
 
 .product-image img {
-  width: 90%;
+  width: 100%;
   border-radius: 5px;
   margin-bottom: 20px;
+  height: 150px;
 }
 
 .single-product-item h3 {
